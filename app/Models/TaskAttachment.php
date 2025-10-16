@@ -10,4 +10,11 @@ class TaskAttachment extends Model
 {
     /** @use HasFactory<\Database\Factories\TaskAttachmentFactory> */
     use HasFactory, HasUuids;
+
+    protected $guarded = ['id'];
+
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }
