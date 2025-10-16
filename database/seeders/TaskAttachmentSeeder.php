@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\TaskAttachment;
 
 class TaskAttachmentSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class TaskAttachmentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        TaskAttachment::factory()->count(15)->create();
     }
 }
