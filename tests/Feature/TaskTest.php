@@ -17,7 +17,8 @@ class TaskTest extends TestCase
     public function test_the_application_can_get_tasks(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get('api/tasks');
+        $auth = $this->actingAsJwtUser();
+        $response = $this->withHeaders($auth['headers'])->get('api/tasks');
 
         $response->assertStatus(200);
     }
@@ -29,7 +30,8 @@ class TaskTest extends TestCase
             'assigned_user_id' => $user->id,
             'created_by_user_id' => $user->id,
         ]);
-        $response = $this->actingAs($user)->get('api/tasks/' . $task->id);
+        $auth = $this->actingAsJwtUser();
+        $response = $this->withHeaders($auth['headers'])->get('api/tasks/' . $task->id);
 
         $response->assertStatus(200);
     }
@@ -37,7 +39,8 @@ class TaskTest extends TestCase
     public function test_the_application_can_store_a_task(): void
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->post('api/tasks', [
+        $auth = $this->actingAsJwtUser();
+        $response = $this->withHeaders($auth['headers'])->post('api/tasks', [
             'title' => 'Test Task',
             'description' => 'Test Task Description',
             'assigned_user_id' => $user->id,
@@ -57,7 +60,8 @@ class TaskTest extends TestCase
             'assigned_user_id' => $user->id,
             'created_by_user_id' => $user->id,
         ]);
-        $response = $this->actingAs($user)->put('api/tasks/' . $task->id, [
+        $auth = $this->actingAsJwtUser();
+        $response = $this->withHeaders($auth['headers'])->put('api/tasks/' . $task->id, [
             'title' => 'Test Task',
             'description' => 'Test Task Description',
             'assigned_user_id' => $user->id,
@@ -77,7 +81,8 @@ class TaskTest extends TestCase
             'assigned_user_id' => $user->id,
             'created_by_user_id' => $user->id,
         ]);
-        $response = $this->actingAs($user)->delete('api/tasks/' . $task->id);
+        $auth = $this->actingAsJwtUser();
+        $response = $this->withHeaders($auth['headers'])->delete('api/tasks/' . $task->id);
 
         $response->assertStatus(204);
     }
@@ -133,7 +138,8 @@ class TaskTest extends TestCase
             'assigned_user_id' => $user->id,
             'created_by_user_id' => $user->id,
         ]);
-        $response = $this->delete('api/tasks/' . $task->id);
+        $auth = $this->actingAsJwtUser();
+        $response = $this->withHeaders($auth['headers'])->delete('api/tasks/' . $task->id);
 
         $response->assertStatus(401);
     }
