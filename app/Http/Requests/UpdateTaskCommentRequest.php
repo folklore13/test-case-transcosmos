@@ -11,7 +11,7 @@ class UpdateTaskCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateTaskCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'task_id' => 'required|exists:tasks,id',
+            'user_id' => 'string|exists:users,id',
+            'comment' => 'required|string',
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TaskAttachment;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreTaskAttachmentRequest;
 
 class TaskAttachmentController extends Controller
 {
@@ -12,10 +12,13 @@ class TaskAttachmentController extends Controller
         return response()->download($attachment->path);
     }
 
-    public function upload(Request $request){
+    public function upload(StoreTaskAttachmentRequest $request){
+        $data = $request->validated();
+        $file = $data['file'];
+
         $attachment = TaskAttachment::create([
-            'task_id' => $request->task_id,
-            'path' => $request->file('path')->store('attachments'),
+            'task_id' => $data['task_id'],
+            'path' => $file->store('attachments'),
         ]);
 
         return response()->json([

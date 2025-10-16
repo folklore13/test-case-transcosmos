@@ -22,7 +22,8 @@ class StoreTaskAttachmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'task_id' => 'required|exists:tasks,id',
+            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ];
     }
 }

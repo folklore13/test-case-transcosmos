@@ -3,11 +3,16 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskAttachmentController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\TaskCommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('jwt.verify')->group(function (){
-    Route::apiResource('tasks', TaskController::class);
+    Route::apiResource('tasks', TaskController::class)->parameters([
+        'tasks' => 'id',
+    ]);
+    Route::apiResource('comments', TaskCommentController::class)->only(['store', 'update', 'destroy'])->parameters([
+        'comments' => 'id',
+    ]);
     Route::post('tasks/{id}/attachments', [TaskAttachmentController::class, 'upload']);
     Route::get('attachments/{id}/download', [TaskAttachmentController::class, 'download']);
     Route::delete('attachments/{id}', [TaskAttachmentController::class, 'delete']);
