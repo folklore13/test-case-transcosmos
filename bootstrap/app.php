@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'auth:jwt' => AuthenticateWithJWT::class,
+            'jwt.verify' => AuthenticateWithJWT::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

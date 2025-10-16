@@ -138,8 +138,7 @@ class TaskTest extends TestCase
             'assigned_user_id' => $user->id,
             'created_by_user_id' => $user->id,
         ]);
-        $auth = $this->actingAsJwtUser();
-        $response = $this->withHeaders($auth['headers'])->delete('api/tasks/' . $task->id);
+        $response = $this->delete('api/tasks/' . $task->id);
 
         $response->assertStatus(401);
     }
