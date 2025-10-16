@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskAttachmentController;
 use Illuminate\Http\Request;
@@ -11,3 +12,7 @@ Route::middleware('auth:api')->group(function (){
     Route::get('attachments/{id}/download', [TaskAttachmentController::class, 'download']);
     Route::delete('attachments/{id}', [TaskAttachmentController::class, 'delete']);
 });
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout']);
+Route::get('/auth/me', [AuthController::class, 'userProfile']);
