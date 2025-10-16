@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskAttachmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::apiResource('tasks', TaskController::class);
+Route::post('tasks/{id}/attachments', [TaskAttachmentController::class, 'upload']);
+Route::get('attachments/{id}/download', [TaskAttachmentController::class, 'download']);
+Route::delete('attachments/{id}', [TaskAttachmentController::class, 'delete']);
